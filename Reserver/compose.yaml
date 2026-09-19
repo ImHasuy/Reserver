@@ -1,0 +1,7 @@
+﻿services:
+  reserver:
+    image: reserver
+    build:
+      context: .
+      dockerfile: Dockerfile
+
