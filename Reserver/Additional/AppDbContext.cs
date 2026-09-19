@@ -1,11 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using Reserver.Entities;
 
 namespace Reserver.Additional;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    //public DbSet<Admin> Admins { get; set; }
-
+    public DbSet<ApplicationUser> ApplicationUser { get; set; }
+    public DbSet<Equipment> Equipment { get; set; }
+    public DbSet<Location> Location { get; set; }
+    public DbSet<MaintenancePeriod> MaintenancePeriod { get; set; }
+    public DbSet<Reservation> Reservation { get; set; }
+    public DbSet<Resource> Resource { get; set; }
+    public DbSet<ResourceCategory> ResourceCategory { get; set; }
+    public DbSet<Room> Room { get; set; }
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
