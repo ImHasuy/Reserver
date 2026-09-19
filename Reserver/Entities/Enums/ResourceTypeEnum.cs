@@ -1,6 +1,0 @@
-namespace Reserver.Entities.Enums;
-
-public enum ResourceTypeEnum
-{
-    //??????????
-}

@@ -1,8 +1,0 @@
-namespace Reserver.Entities.Enums;
-
-public enum ResourceStatusEnum
-{
-    Free = 0,
-    Reserved = 1,
-    Maintenance = 2,
-}
