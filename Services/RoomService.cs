@@ -2,26 +2,25 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Reserver.Additional;
 using Reserver.DTOs.Location;
-using Reserver.Entities;
 using Reserver.Interfaces;
 
 namespace Reserver.Services;
 
-public class LocationService : ILocationService
+public class RoomService : ILocationService
 {
     private readonly AppDbContext _context;
     private readonly IMapper _mapper;
-    public LocationService(AppDbContext context, IMapper mapper)
+    public RoomService(AppDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
 
-    public async Task<string> CreateLocation(CreateLocationDto location)
+    public async Task<string> CreateLocation(CreateRoomDto room)
     {
-        var temp = _mapper.Map<Location>(location);
-        await _context.Location.AddAsync(temp);
+        var temp = _mapper.Map<Room>(location);
+        await _context.Room.AddAsync(temp);
         await _context.SaveChangesAsync();
         return $"Location created with id:  {temp.Id}";
     }
