@@ -4,6 +4,7 @@ using Reserver.DTOs.Location;
 using Reserver.DTOs.MaintenancePeriod;
 using Reserver.DTOs.Reservation;
 using Reserver.DTOs.Resource;
+using Reserver.DTOs.ResourceCategory;
 using Reserver.Entities;
 
 namespace Reserver.Additional;
@@ -83,6 +84,12 @@ public class AutoMapperProfile: Profile
         CreateMap<CreateLocationDto, Location>().ReverseMap();
         
         
+        #endregion
+
+        #region Resource Category
+        CreateMap<CreateResourceCategoryDto, ResourceCategory>().ReverseMap();
+        
+
         #endregion
     }
 }
