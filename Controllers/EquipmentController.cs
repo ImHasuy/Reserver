@@ -1,28 +1,30 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Reserver.Additional;
-using Reserver.DTOs.Resource;
+using Reserver.DTOs.Equipment;
 using Reserver.Interfaces;
 
 namespace Reserver.Controllers;
 
+
+
 [ApiController]
 [Route("api/[Controller]")]
-public class ResourceController : ControllerBase
+public class EquipmentController : ControllerBase
 {
-    private readonly IResourceService _resourceService;
+    private readonly IEquipmentService _equipmentService;
 
-    public ResourceController(IResourceService resourceService)
+    public EquipmentController(IEquipmentService equipmentService)
     {
-        _resourceService = resourceService;
+        _equipmentService = equipmentService;
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateResource(CreateResourceDTO createResourceDto)
+    public async Task<IActionResult> CreateResource(CreateEquipmentDto createEquipmentDto)
     {
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Data = await _resourceService.CreateResource(createResourceDto);
+            apiResponse.Data = await _equipmentService.CreateEquipment(createEquipmentDto);
             return Ok(apiResponse);
         }
         catch (Exception e)
@@ -39,7 +41,7 @@ public class ResourceController : ControllerBase
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Data = await _resourceService.ListReources();
+            apiResponse.Data = await _equipmentService.GetEquipments();
             return Ok(apiResponse);
         }
         catch (Exception e)
@@ -52,12 +54,12 @@ public class ResourceController : ControllerBase
 
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> ShowResource(Guid id)
+    public async Task<IActionResult> GetAEquipment(Guid id)
     {
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Data = await _resourceService.ShowResource(id);
+            apiResponse.Data = await _equipmentService.GetAEquipment(id);
             return Ok(apiResponse);
         }
         catch (Exception e)
@@ -70,12 +72,12 @@ public class ResourceController : ControllerBase
     
     
     [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateResource(Guid id ,UpdateResourcesDto resource)
+    public async Task<IActionResult> UpdateResource(Guid id ,UpdateEquipmentDto equipmentDto)
     {
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Data = await _resourceService.UpdateResource(resource, id);
+            apiResponse.Data = await _equipmentService.UpdateEquipment(equipmentDto, id);
             return Ok(apiResponse);
         }
         catch (Exception e)
@@ -87,13 +89,13 @@ public class ResourceController : ControllerBase
     }
     
     
-    [HttpPost("{id:guid}/deactivate")]
-    public async Task<IActionResult> DeactivateResource(Guid id)
+    [HttpGet("{id:guid}/reservations")]
+    public async Task<IActionResult>  GetReservationsById(Guid id)
     {
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Data = await _resourceService.DeactivateResource(id);
+            apiResponse.Data = await _equipmentService. GetReservationsById(id);
             return Ok(apiResponse);
         }
         catch (Exception e)
@@ -103,15 +105,14 @@ public class ResourceController : ControllerBase
         }
         return BadRequest(apiResponse);
     }
-    
-        
-    [HttpPost("{id:guid}/activate")]
-    public async Task<IActionResult> ActivateResource(Guid id)
+          
+    [HttpGet("{id:guid}/availability")]
+    public async Task<IActionResult> GetEquipmentAvailabilityInTimePeriod(GetEquipmentAvailabilityDto availabilityDto, Guid id)
     {
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Data = await _resourceService.ActivateResource(id);
+            apiResponse.Data = await _equipmentService.GetEquipmentAvailabilityInTimePeriod( availabilityDto, id);
             return Ok(apiResponse);
         }
         catch (Exception e)
@@ -121,6 +122,5 @@ public class ResourceController : ControllerBase
         }
         return BadRequest(apiResponse);
     }
-
     
 }

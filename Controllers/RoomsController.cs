@@ -1,28 +1,30 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Reserver.Additional;
-using Reserver.DTOs.Resource;
+using Reserver.DTOs.Room;
 using Reserver.Interfaces;
 
 namespace Reserver.Controllers;
 
+
+
 [ApiController]
 [Route("api/[Controller]")]
-public class ResourceController : ControllerBase
+public class RoomsController : ControllerBase
 {
-    private readonly IResourceService _resourceService;
+    private readonly IRoomService _roomService;
 
-    public ResourceController(IResourceService resourceService)
+    public RoomsController(IRoomService roomService)
     {
-        _resourceService = resourceService;
+        _roomService = roomService;
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateResource(CreateResourceDTO createResourceDto)
+    public async Task<IActionResult> CreateRoom(CreateRoomDto createRoomDto)
     {
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Data = await _resourceService.CreateResource(createResourceDto);
+            apiResponse.Data = await _roomService.CreateRoom(createRoomDto);
             return Ok(apiResponse);
         }
         catch (Exception e)
@@ -33,85 +35,15 @@ public class ResourceController : ControllerBase
         return BadRequest(apiResponse);
     }
     
-    [HttpGet]
-    public async Task<IActionResult> ListReources()
-    {
-        ApiResponse apiResponse = new ApiResponse();
-        try
-        {
-            apiResponse.Data = await _resourceService.ListReources();
-            return Ok(apiResponse);
-        }
-        catch (Exception e)
-        {
-            apiResponse.StatusCode = 400;
-            apiResponse.Message = e.Message;
-        }
-        return BadRequest(apiResponse);
-    }
-
-
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> ShowResource(Guid id)
-    {
-        ApiResponse apiResponse = new ApiResponse();
-        try
-        {
-            apiResponse.Data = await _resourceService.ShowResource(id);
-            return Ok(apiResponse);
-        }
-        catch (Exception e)
-        {
-            apiResponse.StatusCode = 400;
-            apiResponse.Message = e.Message;
-        }
-        return BadRequest(apiResponse);
-    }
-    
-    
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateResource(Guid id ,UpdateResourcesDto resource)
-    {
-        ApiResponse apiResponse = new ApiResponse();
-        try
-        {
-            apiResponse.Data = await _resourceService.UpdateResource(resource, id);
-            return Ok(apiResponse);
-        }
-        catch (Exception e)
-        {
-            apiResponse.StatusCode = 400;
-            apiResponse.Message = e.Message;
-        }
-        return BadRequest(apiResponse);
-    }
-    
-    
-    [HttpPost("{id:guid}/deactivate")]
-    public async Task<IActionResult> DeactivateResource(Guid id)
-    {
-        ApiResponse apiResponse = new ApiResponse();
-        try
-        {
-            apiResponse.Data = await _resourceService.DeactivateResource(id);
-            return Ok(apiResponse);
-        }
-        catch (Exception e)
-        {
-            apiResponse.StatusCode = 400;
-            apiResponse.Message = e.Message;
-        }
-        return BadRequest(apiResponse);
-    }
     
         
-    [HttpPost("{id:guid}/activate")]
-    public async Task<IActionResult> ActivateResource(Guid id)
+    [HttpGet]
+    public async Task<IActionResult> GetRooms()
     {
         ApiResponse apiResponse = new ApiResponse();
         try
         {
-            apiResponse.Data = await _resourceService.ActivateResource(id);
+            apiResponse.Data = await _roomService.GetRooms();
             return Ok(apiResponse);
         }
         catch (Exception e)
@@ -121,6 +53,77 @@ public class ResourceController : ControllerBase
         }
         return BadRequest(apiResponse);
     }
-
     
+          
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetARoom(Guid id)
+
+    {
+        ApiResponse apiResponse = new ApiResponse();
+        try
+        {
+            apiResponse.Data = await _roomService.GetARoom(id);
+            return Ok(apiResponse);
+        }
+        catch (Exception e)
+        {
+            apiResponse.StatusCode = 400;
+            apiResponse.Message = e.Message;
+        }
+        return BadRequest(apiResponse);
+    }
+          
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateRoom(UpdateRoomDto roomDto, Guid id)
+    {
+        ApiResponse apiResponse = new ApiResponse();
+        try
+        {
+            apiResponse.Data = await _roomService.UpdateRoom(roomDto, id);
+            return Ok(apiResponse);
+        }
+        catch (Exception e)
+        {
+            apiResponse.StatusCode = 400;
+            apiResponse.Message = e.Message;
+        }
+        return BadRequest(apiResponse);
+    }
+          
+    [HttpGet("{id:guid}/reservations")]
+    public async Task<IActionResult>  GetReservationsById(Guid id)
+    {
+        ApiResponse apiResponse = new ApiResponse();
+        try
+        {
+            apiResponse.Data = await _roomService. GetReservationsById(id);
+            return Ok(apiResponse);
+        }
+        catch (Exception e)
+        {
+            apiResponse.StatusCode = 400;
+            apiResponse.Message = e.Message;
+        }
+        return BadRequest(apiResponse);
+    }
+          
+    [HttpGet("{id:guid}/availability")]
+    public async Task<IActionResult> GetRoomAvailabilityInTimePeriod(GetRoomAvaliabilityDto availabilityDto, Guid id)
+    {
+        ApiResponse apiResponse = new ApiResponse();
+        try
+        {
+            apiResponse.Data = await _roomService.GetRoomAvailabilityInTimePeriod( availabilityDto, id);
+            return Ok(apiResponse);
+        }
+        catch (Exception e)
+        {
+            apiResponse.StatusCode = 400;
+            apiResponse.Message = e.Message;
+        }
+        return BadRequest(apiResponse);
+    }
+          
+   
+
 }

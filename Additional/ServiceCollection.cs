@@ -12,6 +12,11 @@ public static class ServiceCollection
         services.AddScoped<IEquipmentCategoryService, EquipmentCategoryService>();
         services.AddScoped<ILocationService, LocationService>();
         services.AddScoped<IResourceCategoryService, ResourceCategoryService>();
+        services.AddScoped<IRoomService, RoomService>();
+        services.AddScoped<IEquipmentService, EquipmentService>();
+        
+        
+        
         
         
         services.AddHttpContextAccessor();

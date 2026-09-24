@@ -1,10 +1,12 @@
 using AutoMapper;
+using Reserver.DTOs.Equipment;
 using Reserver.DTOs.EquipmentCategory;
 using Reserver.DTOs.Location;
 using Reserver.DTOs.MaintenancePeriod;
 using Reserver.DTOs.Reservation;
 using Reserver.DTOs.Resource;
 using Reserver.DTOs.ResourceCategory;
+using Reserver.DTOs.Room;
 using Reserver.Entities;
 
 namespace Reserver.Additional;
@@ -51,9 +53,6 @@ public class AutoMapperProfile: Profile
                 opt.Condition((src, dest, srcMember) => srcMember != null));
         
         #endregion
-
-        
-        
         
         #region Reservation 
         
@@ -64,7 +63,6 @@ public class AutoMapperProfile: Profile
         
         #endregion
         
-        
         #region Maintenance
 
         CreateMap<GetMaintenancePeriodsDTOBrief, MaintenancePeriod>().ReverseMap();
@@ -73,7 +71,6 @@ public class AutoMapperProfile: Profile
 
 
         #endregion
-        
         
         #region Equipment Category
         CreateMap<CreateEquipmentCategoryDto, EquipmentCategory>().ReverseMap();
@@ -89,6 +86,23 @@ public class AutoMapperProfile: Profile
         #region Resource Category
         CreateMap<CreateResourceCategoryDto, ResourceCategory>().ReverseMap();
         
+
+        #endregion
+
+        #region Room
+
+        CreateMap<GetRoomsDto, Room>().ReverseMap();
+        CreateMap<CreateRoomDto, Room>().ReverseMap();
+        CreateMap<GetRoomDto, Room>().ReverseMap();
+        CreateMap<UpdateRoomDto, Room>().ReverseMap();
+
+        #endregion
+
+        #region Equipment
+        CreateMap<GetEquipmentDto, Equipment>().ReverseMap();
+        CreateMap<CreateEquipmentDto ,Equipment>().ReverseMap();
+        CreateMap<GetEquipmentsDto, Equipment>().ReverseMap();
+        CreateMap<UpdateEquipmentDto, Equipment>().ReverseMap();
 
         #endregion
     }

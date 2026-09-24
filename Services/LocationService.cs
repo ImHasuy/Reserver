@@ -26,11 +26,4 @@ public class LocationService : ILocationService
         return $"Location created with id:  {temp.Id}";
     }
     
-    public async Task<string> GetRooms()
-    {
-        var temp = await _context.Location.ToListAsync();
-        return _mapper.Map<GetRoomsDto>(temp);
-    }
-
-    
 }

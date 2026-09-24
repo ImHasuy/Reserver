@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using Reserver.Entities.Enums;
 
@@ -26,6 +27,8 @@ public class Room
     
     public List<MaintenancePeriod> MaintenancePeriods { get; set; }
     
+    [ForeignKey("Location")]
+    public Guid LocationId { get; set; }
     public Location  Location { get; set; }
     
     public DateTime CreatedAt { get; set; } = DateTime.Now;
